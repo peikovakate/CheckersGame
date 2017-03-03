@@ -47,11 +47,12 @@ namespace CheckersGame
                     }
                     else
                     {
-                        color = Windows.UI.Color.FromArgb(255, 0, 0, 0);
+                        color = Windows.UI.Color.FromArgb(255, 100, 100, 100);
                     }
                     rect.Fill = new SolidColorBrush(color);
                     Grid.SetRow(rect, i);
                     Grid.SetColumn(rect, j);
+                    Canvas.SetZIndex(rect, -20);
                     CheckersGrid.Children.Add(rect);
                 }
             }
