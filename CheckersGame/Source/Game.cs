@@ -122,6 +122,8 @@ namespace CheckersGame.Source
             {
                 Debug.WriteLine("CheckerUnit was not found in that cell");
             }
+
+           
         }
 
 
@@ -196,7 +198,9 @@ namespace CheckersGame.Source
                     transaction.startCol = targetCol;
                     transaction.targetRow = transaction.targetCol = -1;
                     transactions.Add(transaction);
-                }else
+                    players[turn].Score++;
+                }
+                else
                 {
                     return false;
                 }
