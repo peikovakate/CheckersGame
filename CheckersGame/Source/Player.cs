@@ -16,6 +16,11 @@ namespace CheckersGame.Source
             get { return color == CheckerColor.White ? 0 : 7; }
         }
 
+        public int TargetDirection
+        {
+            get { return color == CheckerColor.White ? -1 : 1; }
+        }
+
         public List<CheckerUnit> Checkers
         {
             get

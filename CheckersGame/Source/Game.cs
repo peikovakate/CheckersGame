@@ -135,6 +135,13 @@ namespace CheckersGame.Source
             {
                 return false;
             }
+            if (Math.Abs(row - checker.row) == 1)
+            {
+                if (!(row - checker.row == players[turn].TargetDirection))
+                {
+                    return false;
+                }
+            }
             return true;
         }
 
