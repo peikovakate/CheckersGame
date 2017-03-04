@@ -124,7 +124,10 @@ namespace CheckersGame.Source
 
         private bool CheckMove(CheckerUnit checker, int row, int col)
         {
-
+            if (turn != (int)checker.color)
+            {
+                return false;
+            }
             return true;
         }
 
