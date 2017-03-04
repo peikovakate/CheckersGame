@@ -113,9 +113,12 @@ namespace CheckersGame.Source
             }
         }
 
-        //TO DO
+
         //check for right turn
+
+        //TO DO:
         //checker can move one cell by diagonal
+        //check for right direction
         //this cell should be empty
         //always beat enemy's checker if it's possible
         //check for borders
@@ -125,6 +128,10 @@ namespace CheckersGame.Source
         private bool CheckMove(CheckerUnit checker, int row, int col)
         {
             if (turn != (int)checker.color)
+            {
+                return false;
+            }
+            if (checkersGrid[row, col]!=null)
             {
                 return false;
             }
