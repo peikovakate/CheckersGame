@@ -8,6 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid Name="background" Background="#FFB8AB32">
+        <TextBlock x:Name="MessageBlock" 
+                   VerticalAlignment="Bottom" 
+                   >
+            Message</TextBlock>
         <Grid Name="CheckersGrid" 
               Background="White" 
               HorizontalAlignment="Center" 

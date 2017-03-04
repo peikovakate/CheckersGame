@@ -118,17 +118,18 @@ namespace CheckersGame
                 //activeChecker.MoveTo(Grid.GetRow(rect), Grid.GetColumn(rect));
             }
             activeChecker = null;
+            MessageBlock.Text = checkersGame.Turn;
         }
 
         private void MoveCheckerControls(List<CheckerTransaction> transactions)
         {
             foreach (var transaction in transactions)
             {
-                CheckerControl checkerControl = checkerControls[transaction.startRow, transaction.startRow];
+                CheckerControl checkerControl = checkerControls[transaction.startRow, transaction.startCol];
                 Grid.SetRow(checkerControl, transaction.targetRow);
                 Grid.SetColumn(checkerControl, transaction.targetCol);
                 checkerControls[transaction.targetRow, transaction.targetCol] = checkerControl;
-                checkerControls[transaction.startRow, transaction.startRow] = null;
+                checkerControls[transaction.startRow, transaction.startCol] = null;
                 
             }
         }
