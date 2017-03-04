@@ -101,6 +101,8 @@ namespace CheckersGame.Source
                 {
                     checker.row = transaction.targetRow;
                     checker.column = transaction.targetCol;
+                    checkersGrid[transaction.startRow, transaction.startCol] = null;
+                    checkersGrid[transaction.targetRow, transaction.targetCol] = checker;
                     transactions.Add(transaction);
                     //if there is no continue
                     nextTurn();
@@ -122,6 +124,7 @@ namespace CheckersGame.Source
 
         private bool CheckMove(CheckerUnit checker, int row, int col)
         {
+
             return true;
         }
 
