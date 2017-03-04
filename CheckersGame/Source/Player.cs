@@ -9,6 +9,13 @@ namespace CheckersGame.Source
     class Player
     {
         private List<CheckerUnit> checkers;
+
+        //where checker turns to king
+        public int TargetRow
+        {
+            get { return color == CheckerColor.White ? 0 : 7; }
+        }
+
         public List<CheckerUnit> Checkers
         {
             get
@@ -42,7 +49,7 @@ namespace CheckersGame.Source
             }
             for (int i = 0; i < 12; i++)
             {
-                CheckerUnit checker;
+                CheckerUnit checker = new CheckerUnit();
                 checker.color = color;
                 checker.row = startRow + i * 2 / 8;
                 checker.column = (startColumn + i * 2 + checker.row % 2) % 8;

@@ -26,14 +26,20 @@ namespace CheckersGame
     {
 
         CheckerControl activeChecker;
-        Game chackersGame;
+        CheckerControl[,] checkerControls;
+        Game checkersGame;
 
         public MainPage()
         {
             this.InitializeComponent();
             PaintGrid();
-            chackersGame = new Game();
+            checkersGame = new Game();
+
+            checkerControls = new CheckerControl[8, 8];
+  
             InitCheckers();
+
+
         }
 
         //paints cells to black and white
@@ -67,7 +73,7 @@ namespace CheckersGame
         //initialize checkers' controls for start position
         private void InitCheckers()
         {
-            List<CheckerUnit> checkers =  chackersGame.GetCheckers();
+            List<CheckerUnit> checkers =  checkersGame.GetCheckers();
             foreach (var checker in checkers)
             {
                 CheckerControl checkerControl = new CheckerControl();
@@ -76,6 +82,8 @@ namespace CheckersGame
                 Grid.SetRow(checkerControl, checker.row);
                 checkerControl.PointerPressed += CheckerControl_PointerPressed;
                 CheckersGrid.Children.Add(checkerControl);
+
+                checkerControls[checker.row, checker.column] = checkerControl;
 
             }
         }
@@ -93,13 +101,36 @@ namespace CheckersGame
             
             Rectangle rect = (Rectangle) sender;
             Debug.WriteLine("Rect " + Grid.GetRow(rect) + "," + Grid.GetColumn(rect) + " pressed");
+            //pass information to the game
+            //if move is correct, ask for transactions
+            //realize transactions
             if (activeChecker!=null)
             {
-                Grid.SetRow(activeChecker, Grid.GetRow(rect));
-                Grid.SetColumn(activeChecker, Grid.GetColumn(rect));
+                CheckerTransaction transaction;
+                transaction.startRow = Grid.GetRow(activeChecker);
+                transaction.startCol = Grid.GetColumn(activeChecker);
+                transaction.targetRow = Grid.GetRow(rect);
+                transaction.targetCol = Grid.GetColumn(rect);
+                checkersGame.PassTransaction(transaction);
+                MoveCheckerControls(checkersGame.GetMoves());
+                //Grid.SetRow(activeChecker, Grid.GetRow(rect));
+                //Grid.SetColumn(activeChecker, Grid.GetColumn(rect));
                 //activeChecker.MoveTo(Grid.GetRow(rect), Grid.GetColumn(rect));
             }
             activeChecker = null;
+        }
+
+        private void MoveCheckerControls(List<CheckerTransaction> transactions)
+        {
+            foreach (var transaction in transactions)
+            {
+                CheckerControl checkerControl = checkerControls[transaction.startRow, transaction.startRow];
+                Grid.SetRow(checkerControl, transaction.targetRow);
+                Grid.SetColumn(checkerControl, transaction.targetCol);
+                checkerControls[transaction.targetRow, transaction.targetCol] = checkerControl;
+                checkerControls[transaction.startRow, transaction.startRow] = null;
+                
+            }
         }
     }
 }
