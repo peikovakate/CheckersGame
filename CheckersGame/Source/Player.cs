@@ -8,7 +8,15 @@ namespace CheckersGame.Source
 {
     class Player
     {
-        List<CheckerUnit> checkers;
+        private List<CheckerUnit> checkers;
+        public List<CheckerUnit> Checkers
+        {
+            get
+            {
+                return checkers;
+            }
+        }
+
         CheckerColor color;
 
         public Player(CheckerColor color)
@@ -37,7 +45,7 @@ namespace CheckersGame.Source
                 CheckerUnit checker;
                 checker.color = color;
                 checker.row = startRow + i * 2 / 8;
-                checker.column = (startColumn + i * 2) % 8;
+                checker.column = (startColumn + i * 2 + checker.row % 2) % 8;
                 checker.isKing = false;
                 checkers.Add(checker);
 

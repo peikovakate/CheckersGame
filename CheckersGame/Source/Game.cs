@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace CheckersGame.Source
 {
@@ -18,15 +19,21 @@ namespace CheckersGame.Source
 
     class Game
     {
+        private Player[] players;
+
         public Game()
         {
-            Player first = new Player(CheckerColor.White);
-            Player second = new Player(CheckerColor.Black);
+            players = new Player[2];
+            players[0] = new Player(CheckerColor.White);
+            players[1] = new Player(CheckerColor.Black);
         }
 
-        public void ClickOnTheGrid(int row, int col)
+        public List<CheckerUnit> GetCheckers()
         {
-
+            List<CheckerUnit> checkers = new List<CheckerUnit>();
+            checkers.AddRange(players[0].Checkers);
+            checkers.AddRange(players[1].Checkers);
+            return checkers;
         }
 
     }

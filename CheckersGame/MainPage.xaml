@@ -34,7 +34,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <source:CheckerControl />
+
         </Grid>
     </Grid>
 </Page>

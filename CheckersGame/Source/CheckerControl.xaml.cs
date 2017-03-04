@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -55,6 +56,13 @@ namespace CheckersGame.Source
         public CheckerControl()
         {
             this.InitializeComponent();
+        }
+
+        public void MoveTo(int row, int col)
+        {
+            Debug.WriteLine("Moving CheckerControl");
+            Grid.SetColumn(this, row);
+            Grid.SetColumn(this, col);
         }
 
     }
