@@ -115,11 +115,10 @@ namespace CheckersGame.Source
 
 
         //check for right turn
-
-        //TO DO:
-        //checker can move one cell by diagonal
         //check for right direction
         //this cell should be empty
+        //TO DO:
+        //checker can move one cell by diagonal
         //always beat enemy's checker if it's possible
         //check for borders
         //check for king
@@ -141,6 +140,10 @@ namespace CheckersGame.Source
                 {
                     return false;
                 }
+            }
+            if(!(Math.Abs(row - checker.row)== Math.Abs(col - checker.column)))
+            {
+                return false;
             }
             return true;
         }
