@@ -45,19 +45,19 @@ namespace CheckersGame.Source
             if (color == CheckerColor.Black)
             {
                 startRow = 0;
-                startColumn = 1;
+    
             }
             else
             {
                 startRow = 5;
-                startColumn = 0;
+                
             }
             for (int i = 0; i < 12; i++)
             {
                 CheckerUnit checker = new CheckerUnit();
                 checker.color = color;
                 checker.row = startRow + i * 2 / 8;
-                checker.column = (startColumn + i * 2 + checker.row % 2) % 8;
+                checker.column = (1 + i * 2 + checker.row % 2) % 8;
                 checker.isKing = false;
                 checkers.Add(checker);
 

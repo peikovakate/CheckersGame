@@ -54,11 +54,11 @@ namespace CheckersGame
                     Windows.UI.Color color;
                     if ((i + j) % 2 == 0)
                     {
-                        color = Windows.UI.Colors.LightPink;
+                        color = Windows.UI.Color.FromArgb(255, 245, 235, 200);
                     }
                     else
                     {
-                        color = Windows.UI.Color.FromArgb(255, 100, 100, 100);
+                        color = Windows.UI.Color.FromArgb(255, 80, 80, 80);
                     }
                     rect.Fill = new SolidColorBrush(color);
                     rect.PointerPressed += Rect_PointerPressed;
@@ -126,11 +126,19 @@ namespace CheckersGame
             foreach (var transaction in transactions)
             {
                 CheckerControl checkerControl = checkerControls[transaction.startRow, transaction.startCol];
-                Grid.SetRow(checkerControl, transaction.targetRow);
-                Grid.SetColumn(checkerControl, transaction.targetCol);
-                checkerControls[transaction.targetRow, transaction.targetCol] = checkerControl;
+
+                if (transaction.targetRow == -1)
+                {
+                    CheckersGrid.Children.Remove(checkerControl);
+                }else
+                {
+                    Grid.SetRow(checkerControl, transaction.targetRow);
+                    Grid.SetColumn(checkerControl, transaction.targetCol);
+                    checkerControls[transaction.targetRow, transaction.targetCol] = checkerControl;
+                }
                 checkerControls[transaction.startRow, transaction.startCol] = null;
-                
+
+
             }
         }
     }

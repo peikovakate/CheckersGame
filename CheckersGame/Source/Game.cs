@@ -18,6 +18,12 @@ namespace CheckersGame.Source
         public bool isKing;
     }
 
+    public struct Cell
+    {
+        public int row;
+        public int col;
+    }
+
     public struct CheckerTransaction
     {
         public int startRow;
@@ -37,6 +43,11 @@ namespace CheckersGame.Source
         private void nextTurn()
         {
             turn = (turn + 1) % 2;
+        }
+
+        private int enemy()
+        {
+            return (turn + 1) % 2; 
         }
 
         public string Turn
@@ -117,12 +128,35 @@ namespace CheckersGame.Source
         //check for right turn
         //check for right direction
         //this cell should be empty
-        //TO DO:
         //checker can move one cell by diagonal
+        //TO DO:
         //always beat enemy's checker if it's possible
         //check for borders
         //check for king
         //check for ather possible beatings
+
+        private int[,] beatebleDirections = { { -1, -1}, { -1, 1}, { 1, 1 }, { 1, -1 } };
+
+        private List<Cell> getBeatebleCells(CheckerUnit checker)
+        {
+            List<Cell> cells = new List<Cell>();
+            for(int i=0; i<beatebleDirections.Length; i++)
+            {
+                int targetRow = checker.row + beatebleDirections[i, 0];
+                int targetCol = checker.column + beatebleDirections[i, 1];
+                if (checkersGrid[targetRow, targetCol]!=null &&
+                    (int)checkersGrid[targetRow, targetCol].color != turn &&
+                    (targetRow != 0 && targetRow != 7 && targetCol != 0 && targetCol != 7)
+                    )
+                {
+                    Cell target;
+                    target.row = targetRow;
+                    target.col = targetCol;
+                    cells.Add(target);
+                }
+            }
+            return cells;
+        }       
 
         private bool CheckMove(CheckerUnit checker, int row, int col)
         {
@@ -134,17 +168,44 @@ namespace CheckersGame.Source
             {
                 return false;
             }
+
+            if(!(Math.Abs(row - checker.row)== Math.Abs(col - checker.column)))
+            {
+                return false;
+            }
+
             if (Math.Abs(row - checker.row) == 1)
             {
                 if (!(row - checker.row == players[turn].TargetDirection))
                 {
                     return false;
                 }
+            }else if(Math.Abs(row - checker.row) == 2)
+            {
+                int targetRow = (row + checker.row) / 2;
+                int targetCol = (col + checker.column) / 2;
+
+                if (checkersGrid[targetRow, targetCol] != null &&
+                    (int)checkersGrid[targetRow, targetCol].color != turn)
+                {
+                    
+                    players[enemy()].Checkers.Remove(checkersGrid[targetRow, targetCol]);
+                    checkersGrid[targetRow, targetCol] = null;
+                    CheckerTransaction transaction;
+                    transaction.startRow = targetRow;
+                    transaction.startCol = targetCol;
+                    transaction.targetRow = transaction.targetCol = -1;
+                    transactions.Add(transaction);
+                }else
+                {
+                    return false;
+                }
             }
-            if(!(Math.Abs(row - checker.row)== Math.Abs(col - checker.column)))
+            else
             {
                 return false;
             }
+
             return true;
         }
 
