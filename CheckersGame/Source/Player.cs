@@ -48,12 +48,10 @@ namespace CheckersGame.Source
             if (color == CheckerColor.Black)
             {
                 startRow = 0;
-    
             }
             else
             {
-                startRow = 5;
-                
+                startRow = 5;  
             }
             for (int i = 0; i < 12; i++)
             {
@@ -62,7 +60,6 @@ namespace CheckersGame.Source
                 checker.Row = startRow + i * 2 / 8;
                 checker.Column = (1 + i * 2 + checker.Row % 2) % 8;
                 checkers.Add(checker);
-
             }
         }
 

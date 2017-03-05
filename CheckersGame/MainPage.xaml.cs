@@ -103,29 +103,34 @@ namespace CheckersGame
         //field is chosen
         private void Rect_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            
-            Rectangle rect = (Rectangle) sender;
+
+            Rectangle rect = (Rectangle)sender;
             Debug.WriteLine("Rect " + Grid.GetRow(rect) + "," + Grid.GetColumn(rect) + " pressed");
             //pass information to the game
             //if move is correct, ask for transactions
             //realize transactions
-            if (activeChecker!=null)
+            if (activeChecker != null)
             {
-                CheckerTransaction transaction;
-                transaction.startCell.row = Grid.GetRow(activeChecker);
-                transaction.startCell.col = Grid.GetColumn(activeChecker);
-                transaction.targetCell.row = Grid.GetRow(rect);
-                transaction.targetCell.col = Grid.GetColumn(rect);
-                checkersGame.PassTransaction(transaction);
-                MoveCheckerControls(checkersGame.GetMoves());
-                //Grid.SetRow(activeChecker, Grid.GetRow(rect));
-                //Grid.SetColumn(activeChecker, Grid.GetColumn(rect));
-                //activeChecker.MoveTo(Grid.GetRow(rect), Grid.GetColumn(rect));
+                Cell startCell, targetCell;
+                startCell.row = Grid.GetRow(activeChecker);
+                startCell.col = Grid.GetColumn(activeChecker);
+                targetCell.row = Grid.GetRow(rect);
+                targetCell.col = Grid.GetColumn(rect);
+                HandleMove(startCell, targetCell);
                 activeChecker.IsActive = false;
             }
-            
+
             activeChecker = null;
             MessageBlock.Text = checkersGame.Turn;
+        }
+
+        private void HandleMove(Cell startCell, Cell targetCell)
+        {
+            CheckerTransaction transaction;
+            transaction.startCell = startCell;
+            transaction.targetCell = targetCell;
+            checkersGame.PassTransaction(transaction);
+            MoveCheckerControls(checkersGame.GetMoves());
         }
 
         private void MoveCheckerControls(List<CheckerTransaction> transactions)

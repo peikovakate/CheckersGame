@@ -167,9 +167,6 @@ namespace CheckersGame.Source
 
                     players[enemy()].Checkers.Remove(checkersGrid[targetRow, targetCol]);
                     checkersGrid[targetRow, targetCol] = null;
-
-
-
                     CheckerTransaction transaction;
                     transaction.startCell.row = targetRow;
                     transaction.startCell.col = targetCol;
