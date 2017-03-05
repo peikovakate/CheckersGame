@@ -112,17 +112,18 @@ namespace CheckersGame
             if (activeChecker!=null)
             {
                 CheckerTransaction transaction;
-                transaction.startRow = Grid.GetRow(activeChecker);
-                transaction.startCol = Grid.GetColumn(activeChecker);
-                transaction.targetRow = Grid.GetRow(rect);
-                transaction.targetCol = Grid.GetColumn(rect);
+                transaction.startCell.row = Grid.GetRow(activeChecker);
+                transaction.startCell.col = Grid.GetColumn(activeChecker);
+                transaction.targetCell.row = Grid.GetRow(rect);
+                transaction.targetCell.col = Grid.GetColumn(rect);
                 checkersGame.PassTransaction(transaction);
                 MoveCheckerControls(checkersGame.GetMoves());
                 //Grid.SetRow(activeChecker, Grid.GetRow(rect));
                 //Grid.SetColumn(activeChecker, Grid.GetColumn(rect));
                 //activeChecker.MoveTo(Grid.GetRow(rect), Grid.GetColumn(rect));
+                activeChecker.IsActive = false;
             }
-            activeChecker.IsActive = false;
+            
             activeChecker = null;
             MessageBlock.Text = checkersGame.Turn;
         }
@@ -131,18 +132,18 @@ namespace CheckersGame
         {
             foreach (var transaction in transactions)
             {
-                CheckerControl checkerControl = checkerControls[transaction.startRow, transaction.startCol];
+                CheckerControl checkerControl = checkerControls[transaction.startCell.row, transaction.startCell.col];
 
-                if (transaction.targetRow == -1)
+                if (transaction.targetCell.row == -1)
                 {
                     CheckersGrid.Children.Remove(checkerControl);
                 }else
                 {
-                    Grid.SetRow(checkerControl, transaction.targetRow);
-                    Grid.SetColumn(checkerControl, transaction.targetCol);
-                    checkerControls[transaction.targetRow, transaction.targetCol] = checkerControl;
+                    Grid.SetRow(checkerControl, transaction.targetCell.row);
+                    Grid.SetColumn(checkerControl, transaction.targetCell.col);
+                    checkerControls[transaction.targetCell.row, transaction.targetCell.col] = checkerControl;
                 }
-                checkerControls[transaction.startRow, transaction.startCol] = null;
+                checkerControls[transaction.startCell.row, transaction.startCell.col] = null;
 
             }
         }
