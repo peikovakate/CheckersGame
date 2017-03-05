@@ -11,5 +11,10 @@ namespace CheckersGame.Source
         public Human(CheckerColor color) : base(color)
         {
         }
+
+        public override void MakeMove(Unit[,] chackersGrid)
+        {
+            
+        }
     }
 }

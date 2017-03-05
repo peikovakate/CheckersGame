@@ -6,8 +6,30 @@ using System.Threading.Tasks;
 
 namespace CheckersGame.Source
 {
+    public class MoveEventArgs
+    {
+        public Cell StartCell { get; private set; }
+        public Cell TargetCell { get; private set; }
+        public MoveEventArgs(Cell start, Cell target)
+        {
+            StartCell = start;
+            TargetCell = target;
+        }
+    }
+
     class Player
     {
+        public delegate void MoveEventHandler(object sender, MoveEventArgs e);
+
+        //Событие OnCount c типом делегата MethodContainer.
+        public event MoveEventHandler onMove;
+
+        protected virtual void RaiseSampleEvent(Cell s, Cell t)
+        {
+            if (onMove != null)
+                onMove(this, new MoveEventArgs(s, t));
+        }
+
         private List<Unit> checkers;
 
         public int Score;
@@ -61,6 +83,11 @@ namespace CheckersGame.Source
                 checker.Column = (1 + i * 2 + checker.Row % 2) % 8;
                 checkers.Add(checker);
             }
+        }
+
+        public virtual void MakeMove(Unit[,] chackersGrid)
+        {
+
         }
 
     }

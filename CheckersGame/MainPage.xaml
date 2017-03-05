@@ -12,6 +12,7 @@
                    VerticalAlignment="Bottom" 
                    >
             Message</TextBlock>
+        <Button Click="Button_Click">NEXT</Button>
         <Grid Name="CheckersGrid" 
               Background="White" 
               HorizontalAlignment="Center" 
@@ -38,7 +39,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-
+        
         </Grid>
     </Grid>
 </Page>

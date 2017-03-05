@@ -10,6 +10,7 @@ namespace CheckersGame.Source
     {
         private int[,] beatebleDirections = { { -1, -1 }, { -1, 1 }, { 1, 1 }, { 1, -1 } };
 
+
         public override List<Cell> getBeatebleCells(Unit[,] checkersGrid)
         {
             List<Cell> cells = new List<Cell>();
@@ -98,6 +99,25 @@ namespace CheckersGame.Source
             {
                 return false;
             }
+        }
+
+        public override List<Cell> PossibleCellsToGo(Unit[,] checkersGrid)
+        {
+            List<Cell> cells = new List<Cell>();
+            int targetRow = Row + TargetDirection;
+            int targetColumn = Column + 1;
+            if (targetRow>=0 && targetRow<7 && targetColumn>=0 && targetColumn<7 &&
+                checkersGrid[targetRow, targetColumn] == null)
+            {
+                cells.Add(new Cell { row = targetRow, col=targetColumn});
+            }
+            targetColumn = Column - 1;
+            if (targetRow >= 0 && targetRow < 7 && targetColumn >= 0 && targetColumn < 7 &&
+                checkersGrid[targetRow, targetColumn] == null)
+            {
+                cells.Add(new Cell { row = targetRow, col = targetColumn });
+            }
+            return cells;
         }
     }
 }

@@ -34,12 +34,22 @@ namespace CheckersGame
             this.InitializeComponent();
             PaintGrid();
             checkersGame = new Game();
+            checkersGame.Players[0].onMove += MainPage_onMove;
+            checkersGame.Players[1].onMove += MainPage_onMove;
 
             checkerControls = new CheckerControl[8, 8];
   
             InitCheckers();
 
 
+        }
+
+        private void MainPage_onMove(object sender, MoveEventArgs e)
+        {
+            if (e.StartCell.row != -1)
+            {
+                HandleMove(e.StartCell, e.TargetCell);
+            }
         }
 
         //paints cells to black and white
@@ -131,6 +141,7 @@ namespace CheckersGame
             transaction.targetCell = targetCell;
             checkersGame.PassTransaction(transaction);
             MoveCheckerControls(checkersGame.GetMoves());
+            //checkersGame.AskToMove();
         }
 
         private void MoveCheckerControls(List<CheckerTransaction> transactions)
@@ -151,6 +162,11 @@ namespace CheckersGame
                 checkerControls[transaction.startCell.row, transaction.startCell.col] = null;
 
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            checkersGame.AskToMove();
         }
     }
 }

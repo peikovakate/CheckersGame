@@ -40,9 +40,10 @@ namespace CheckersGame.Source
 
     class Game
     {
-        private Player[] players;
+        public Player[] Players { get; private set; }
         private Unit[,] checkersGrid;
         private List<CheckerTransaction> transactions;
+
 
         private int turn;
         private void nextTurn()
@@ -72,31 +73,31 @@ namespace CheckersGame.Source
 
         public Game()
         {
-            players = new Player[2];
-            players[0] = new Player(CheckerColor.White);
-            players[1] = new Player(CheckerColor.Black);
+            Players = new Player[2];
+            Players[0] = new AI(CheckerColor.White);
+            Players[1] = new AI(CheckerColor.Black);
 
             checkersGrid = new Unit[8,8];
 
-            foreach (Unit checker in players[0].Checkers)
+            foreach (Unit checker in Players[0].Checkers)
             {
                 checkersGrid[checker.Row, checker.Column] = checker;
             }
 
-            foreach (Unit checker in players[1].Checkers)
+            foreach (Unit checker in Players[1].Checkers)
             {
                 checkersGrid[checker.Row, checker.Column] = checker;
             }
 
             transactions = new List<CheckerTransaction>();
-
+            
         }
 
         public List<Unit> GetCheckers()
         {
             List<Unit> checkers = new List<Unit>();
-            checkers.AddRange(players[0].Checkers);
-            checkers.AddRange(players[1].Checkers);
+            checkers.AddRange(Players[0].Checkers);
+            checkers.AddRange(Players[1].Checkers);
             return checkers;
         }
 
@@ -137,6 +138,11 @@ namespace CheckersGame.Source
            
         }
 
+        public void AskToMove()
+        {
+            Players[turn].MakeMove(checkersGrid);
+        }
+
         private bool CheckIfPlayerCanBeat(Player player)
         {
             foreach (var checker in player.Checkers)
@@ -165,20 +171,20 @@ namespace CheckersGame.Source
                     int targetRow = (targetCell.row + checker.Row) / 2;
                     int targetCol = (targetCell.col + checker.Column) / 2;
 
-                    players[enemy()].Checkers.Remove(checkersGrid[targetRow, targetCol]);
+                    Players[enemy()].Checkers.Remove(checkersGrid[targetRow, targetCol]);
                     checkersGrid[targetRow, targetCol] = null;
                     CheckerTransaction transaction;
                     transaction.startCell.row = targetRow;
                     transaction.startCell.col = targetCol;
                     transaction.targetCell.row = transaction.targetCell.col = -1;
                     transactions.Add(transaction);
-                    players[turn].Score++;
+                    Players[turn].Score++;
                 }else
                 {
                     //player can beat some 
                     //TO DO:
                     //check for right checker
-                    if (CheckIfPlayerCanBeat(players[turn]))
+                    if (CheckIfPlayerCanBeat(Players[turn]))
                     {
                         return false;
                     }

@@ -12,6 +12,10 @@ namespace CheckersGame.Source
         public int Row;
         public int Column;
         public CheckerColor Color;
+        public Cell CurrentCell
+        {
+            get { return new Cell { row = Row, col = Column }; }
+        }
 
         public int TargetDirection
         {
@@ -34,6 +38,11 @@ namespace CheckersGame.Source
         {
             Debug.WriteLine("need to be override");
             return false;
+        }
+
+        public virtual List<Cell> PossibleCellsToGo(Unit[,] checkersGrid)
+        {
+            return new List<Cell>();
         }
     }
 }
