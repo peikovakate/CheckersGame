@@ -10,13 +10,13 @@ namespace CheckersGame.Source
 {
     public enum CheckerColor { White, Black };
 
-    public class CheckerUnit
-    {
-        public int row;
-        public int column;
-        public CheckerColor color;
-        public bool isKing;
-    }
+    //public class CheckerUnit
+    //{
+    //    public int row;
+    //    public int column;
+    //    public CheckerColor color;
+    //    public bool isKing;
+    //}
 
     public struct Cell
     {
@@ -35,7 +35,7 @@ namespace CheckersGame.Source
     class Game
     {
         private Player[] players;
-        private CheckerUnit[,] checkersGrid;
+        private Unit[,] checkersGrid;
         private List<CheckerTransaction> transactions;
 
         private int turn;
@@ -71,25 +71,25 @@ namespace CheckersGame.Source
             players[0] = new Player(CheckerColor.White);
             players[1] = new Player(CheckerColor.Black);
 
-            checkersGrid = new CheckerUnit[8,8];
+            checkersGrid = new Unit[8,8];
 
-            foreach (CheckerUnit checker in players[0].Checkers)
+            foreach (Unit checker in players[0].Checkers)
             {
-                checkersGrid[checker.row, checker.column] = checker;
+                checkersGrid[checker.Row, checker.Column] = checker;
             }
 
-            foreach (CheckerUnit checker in players[1].Checkers)
+            foreach (Unit checker in players[1].Checkers)
             {
-                checkersGrid[checker.row, checker.column] = checker;
+                checkersGrid[checker.Row, checker.Column] = checker;
             }
 
             transactions = new List<CheckerTransaction>();
 
         }
 
-        public List<CheckerUnit> GetCheckers()
+        public List<Unit> GetCheckers()
         {
-            List<CheckerUnit> checkers = new List<CheckerUnit>();
+            List<Unit> checkers = new List<Unit>();
             checkers.AddRange(players[0].Checkers);
             checkers.AddRange(players[1].Checkers);
             return checkers;
@@ -105,13 +105,13 @@ namespace CheckersGame.Source
             //Clear previous transactions
             transactions.Clear();
 
-            CheckerUnit checker = checkersGrid[transaction.startRow, transaction.startCol];
+            Unit checker = checkersGrid[transaction.startRow, transaction.startCol];
             if (checker != null)
             {
                 if(CheckMove(checker, transaction.targetRow, transaction.targetCol))
                 {
-                    checker.row = transaction.targetRow;
-                    checker.column = transaction.targetCol;
+                    checker.Row = transaction.targetRow;
+                    checker.Column = transaction.targetCol;
                     checkersGrid[transaction.startRow, transaction.startCol] = null;
                     checkersGrid[transaction.targetRow, transaction.targetCol] = checker;
                     transactions.Add(transaction);
@@ -139,15 +139,15 @@ namespace CheckersGame.Source
 
         private int[,] beatebleDirections = { { -1, -1}, { -1, 1}, { 1, 1 }, { 1, -1 } };
 
-        private List<Cell> getBeatebleCells(CheckerUnit checker)
+        private List<Cell> getBeatebleCells(Unit checker)
         {
             List<Cell> cells = new List<Cell>();
             for(int i=0; i<beatebleDirections.Length; i++)
             {
-                int targetRow = checker.row + beatebleDirections[i, 0];
-                int targetCol = checker.column + beatebleDirections[i, 1];
+                int targetRow = checker.Row + beatebleDirections[i, 0];
+                int targetCol = checker.Column + beatebleDirections[i, 1];
                 if (checkersGrid[targetRow, targetCol]!=null &&
-                    (int)checkersGrid[targetRow, targetCol].color != turn &&
+                    (int)checkersGrid[targetRow, targetCol].Color != turn &&
                     (targetRow != 0 && targetRow != 7 && targetCol != 0 && targetCol != 7)
                     )
                 {
@@ -160,9 +160,9 @@ namespace CheckersGame.Source
             return cells;
         }       
 
-        private bool CheckMove(CheckerUnit checker, int row, int col)
+        private bool CheckMove(Unit checker, int row, int col)
         {
-            if (turn != (int)checker.color)
+            if (turn != (int)checker.Color)
             {
                 return false;
             }
@@ -171,24 +171,24 @@ namespace CheckersGame.Source
                 return false;
             }
 
-            if(!(Math.Abs(row - checker.row)== Math.Abs(col - checker.column)))
+            if(!(Math.Abs(row - checker.Row) == Math.Abs(col - checker.Column)))
             {
                 return false;
             }
 
-            if (Math.Abs(row - checker.row) == 1)
+            if (Math.Abs(row - checker.Row) == 1)
             {
-                if (!(row - checker.row == players[turn].TargetDirection))
+                if (!(row - checker.Row == players[turn].TargetDirection))
                 {
                     return false;
                 }
-            }else if(Math.Abs(row - checker.row) == 2)
+            }else if(Math.Abs(row - checker.Row) == 2)
             {
-                int targetRow = (row + checker.row) / 2;
-                int targetCol = (col + checker.column) / 2;
+                int targetRow = (row + checker.Row) / 2;
+                int targetCol = (col + checker.Column) / 2;
 
                 if (checkersGrid[targetRow, targetCol] != null &&
-                    (int)checkersGrid[targetRow, targetCol].color != turn)
+                    (int)checkersGrid[targetRow, targetCol].Color != turn)
                 {
                     
                     players[enemy()].Checkers.Remove(checkersGrid[targetRow, targetCol]);

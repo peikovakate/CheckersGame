@@ -8,7 +8,7 @@ namespace CheckersGame.Source
 {
     class Player
     {
-        private List<CheckerUnit> checkers;
+        private List<Unit> checkers;
 
         public int Score;
         
@@ -23,7 +23,7 @@ namespace CheckersGame.Source
             get { return color == CheckerColor.White ? -1 : 1; }
         }
 
-        public List<CheckerUnit> Checkers
+        public List<Unit> Checkers
         {
             get
             {
@@ -35,7 +35,7 @@ namespace CheckersGame.Source
 
         public Player(CheckerColor color)
         {
-            checkers = new List<CheckerUnit>();
+            checkers = new List<Unit>();
             this.color = color;
             Score = 0;
             initCheckers();
@@ -44,7 +44,7 @@ namespace CheckersGame.Source
         //set positions for checkers
         private void initCheckers()
         {
-            int startRow, startColumn;
+            int startRow;
             if (color == CheckerColor.Black)
             {
                 startRow = 0;
@@ -57,11 +57,10 @@ namespace CheckersGame.Source
             }
             for (int i = 0; i < 12; i++)
             {
-                CheckerUnit checker = new CheckerUnit();
-                checker.color = color;
-                checker.row = startRow + i * 2 / 8;
-                checker.column = (1 + i * 2 + checker.row % 2) % 8;
-                checker.isKing = false;
+                Unit checker = new Checker();
+                checker.Color = color;
+                checker.Row = startRow + i * 2 / 8;
+                checker.Column = (1 + i * 2 + checker.Row % 2) % 8;
                 checkers.Add(checker);
 
             }

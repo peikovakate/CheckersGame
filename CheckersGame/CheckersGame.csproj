@@ -99,11 +99,14 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Checker.cs" />
     <Compile Include="Source\CheckerControl.xaml.cs">
       <DependentUpon>CheckerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Source\Game.cs" />
+    <Compile Include="Source\King.cs" />
     <Compile Include="Source\Player.cs" />
+    <Compile Include="Source\Unit.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

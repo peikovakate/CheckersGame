@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CheckersGame.Source
 {
-    class King
+    class King : Unit
     {
+        
     }
 }

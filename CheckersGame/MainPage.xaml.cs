@@ -73,17 +73,17 @@ namespace CheckersGame
         //initialize checkers' controls for start position
         private void InitCheckers()
         {
-            List<CheckerUnit> checkers =  checkersGame.GetCheckers();
+            List<Unit> checkers =  checkersGame.GetCheckers();
             foreach (var checker in checkers)
             {
                 CheckerControl checkerControl = new CheckerControl();
-                checkerControl.Color = checker.color;
-                Grid.SetColumn(checkerControl, checker.column);
-                Grid.SetRow(checkerControl, checker.row);
+                checkerControl.Color = checker.Color;
+                Grid.SetColumn(checkerControl, checker.Column);
+                Grid.SetRow(checkerControl, checker.Row);
                 checkerControl.PointerPressed += CheckerControl_PointerPressed;
                 CheckersGrid.Children.Add(checkerControl);
 
-                checkerControls[checker.row, checker.column] = checkerControl;
+                checkerControls[checker.Row, checker.Column] = checkerControl;
 
             }
         }
@@ -143,7 +143,6 @@ namespace CheckersGame
                     checkerControls[transaction.targetRow, transaction.targetCol] = checkerControl;
                 }
                 checkerControls[transaction.startRow, transaction.startCol] = null;
-
 
             }
         }

@@ -8,5 +8,9 @@ namespace CheckersGame.Source
 {
     class Unit
     {
+        public int Row;
+        public int Column;
+        public CheckerColor Color;
+        
     }
 }
