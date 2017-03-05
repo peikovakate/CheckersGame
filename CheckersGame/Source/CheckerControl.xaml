@@ -10,8 +10,20 @@
     d:DesignWidth="400">
 
     <Grid>
-        <Ellipse Name="CheckerEllipse" 
+        <Ellipse x:Name="BorderEllipse" 
+                 Fill="Red" 
+                 Margin="3"
+                 Visibility="Collapsed"/>
+        <Ellipse x:Name="CheckerEllipse" 
                  Fill="Black" 
                  Margin="5"  />
+        <Image x:Name="Crown"
+               Margin="10"
+               Visibility="Collapsed">
+            <Image.Source>
+                <BitmapImage UriSource="ms-appx:///Assets/Crown.png"/>
+            </Image.Source>
+        </Image>
+        
     </Grid>
 </UserControl>

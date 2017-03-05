@@ -28,9 +28,11 @@ namespace CheckersGame.Source
             get { return color; }
             set
             {
-                if(value == CheckerColor.White)
+                color = value;
+                if (value == CheckerColor.White)
                 {
                     CheckerEllipse.Fill = new SolidColorBrush(Windows.UI.Colors.White);
+                    
                 }else
                 {
                     CheckerEllipse.Fill = new SolidColorBrush(Windows.UI.Colors.Black);
@@ -47,9 +49,32 @@ namespace CheckersGame.Source
             {
                 if (value == true)
                 {
-
+                    Crown.Visibility = Visibility.Visible;
+                }
+                else{
+                    Crown.Visibility = Visibility.Collapsed;
                 }
                 isKing = value;
+            }
+        }
+
+        private bool isActive = false;
+
+        public bool IsActive
+        {
+            get { return isActive; }
+            set
+            {
+                isActive = value;
+                if (value == true)
+                {
+                    BorderEllipse.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    BorderEllipse.Visibility = Visibility.Collapsed;
+                }
+                
             }
         }
 

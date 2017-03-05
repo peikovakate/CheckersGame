@@ -91,7 +91,12 @@ namespace CheckersGame
 
         private void CheckerControl_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
+            if (activeChecker != null)
+            {
+                activeChecker.IsActive = false;
+            }
             activeChecker = (CheckerControl)sender;
+            activeChecker.IsActive = true;
             Debug.WriteLine("CheckerControl " + Grid.GetRow(activeChecker) + "," + Grid.GetColumn(activeChecker) + " pressed");
         }
 
@@ -117,6 +122,7 @@ namespace CheckersGame
                 //Grid.SetColumn(activeChecker, Grid.GetColumn(rect));
                 //activeChecker.MoveTo(Grid.GetRow(rect), Grid.GetColumn(rect));
             }
+            activeChecker.IsActive = false;
             activeChecker = null;
             MessageBlock.Text = checkersGame.Turn;
         }

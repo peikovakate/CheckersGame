@@ -10,6 +10,8 @@ namespace CheckersGame.Source
     {
         private List<CheckerUnit> checkers;
 
+        public int Score;
+        
         //where checker turns to king
         public int TargetRow
         {
@@ -35,6 +37,7 @@ namespace CheckersGame.Source
         {
             checkers = new List<CheckerUnit>();
             this.color = color;
+            Score = 0;
             initCheckers();
         }
 
