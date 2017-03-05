@@ -120,8 +120,14 @@ namespace CheckersGame.Source
                     checkersGrid[transaction.startCell.row, transaction.startCell.col] = null;
                     checkersGrid[transaction.targetCell.row, transaction.targetCell.col] = checker;
                     transactions.Add(transaction);
+
                     //if there is no continue
-                    nextTurn();
+                    //there is no beateble checker to active checker or checker did just simple move
+                    if (checker.getBeatebleCells(checkersGrid).Count == 0 || transactions.Count==1)
+                    {
+                        nextTurn();
+                    }
+                    
                 }
             }else
             {
@@ -131,18 +137,17 @@ namespace CheckersGame.Source
            
         }
 
-
-        //check for right turn
-        //check for right direction
-        //this cell should be empty
-        //checker can move one cell by diagonal
-        //TO DO:
-        //always beat enemy's checker if it's possible
-        //check for borders
-        //check for king
-        //check for ather possible beatings
-
-        
+        private bool CheckIfPlayerCanBeat(Player player)
+        {
+            foreach (var checker in player.Checkers)
+            {
+                if (checker.getBeatebleCells(checkersGrid).Count != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         private bool CheckMove(Unit checker, Cell targetCell)
         {
@@ -150,49 +155,44 @@ namespace CheckersGame.Source
             {
                 return false;
             }
-            if (checkersGrid[targetCell.row, targetCell.col] !=null)
-            {
-                return false;
-            }
 
-            if(!(Math.Abs(targetCell.row - checker.Row) == Math.Abs(targetCell.col - checker.Column)))
+            if(checker.CheckMove(checkersGrid, targetCell))
             {
-                return false;
-            }
-
-            if (Math.Abs(targetCell.row - checker.Row) == 1)
-            {
-                if (!(targetCell.row - checker.Row == players[turn].TargetDirection))
+                //TO DO
+                //for king!!!!
+                if (!checker.IsSimpleMove(checkersGrid, targetCell))
                 {
-                    return false;
-                }
-            }else if(Math.Abs(targetCell.row - checker.Row) == 2)
-            {
-                int targetRow = (targetCell.row + checker.Row) / 2;
-                int targetCol = (targetCell.col + checker.Column) / 2;
+                    int targetRow = (targetCell.row + checker.Row) / 2;
+                    int targetCol = (targetCell.col + checker.Column) / 2;
 
-                if (checkersGrid[targetRow, targetCol] != null &&
-                    (int)checkersGrid[targetRow, targetCol].Color != turn)
-                {
-                    
                     players[enemy()].Checkers.Remove(checkersGrid[targetRow, targetCol]);
                     checkersGrid[targetRow, targetCol] = null;
+
+
+
                     CheckerTransaction transaction;
                     transaction.startCell.row = targetRow;
                     transaction.startCell.col = targetCol;
                     transaction.targetCell.row = transaction.targetCell.col = -1;
                     transactions.Add(transaction);
                     players[turn].Score++;
-                }
-                else
+                }else
                 {
-                    return false;
+                    //player can beat some 
+                    //TO DO:
+                    //check for right checker
+                    if (CheckIfPlayerCanBeat(players[turn]))
+                    {
+                        return false;
+                    }
                 }
             }
             else
             {
                 return false;
             }
+
+
 
             return true;
         }

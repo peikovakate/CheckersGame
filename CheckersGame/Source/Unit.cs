@@ -12,11 +12,28 @@ namespace CheckersGame.Source
         public int Row;
         public int Column;
         public CheckerColor Color;
-        
+
+        public int TargetDirection
+        {
+            get { return Color == CheckerColor.White ? -1 : 1; }
+        }
+
         public virtual List<Cell> getBeatebleCells(Unit[,] checkersGrid)
         {
             Debug.WriteLine("need to be override");
             return new List<Cell>();
+        }
+
+        public virtual bool CheckMove(Unit[,] checkersGrid, Cell targetCell)
+        {
+            Debug.WriteLine("need to be override");
+            return false;
+        }
+
+        public virtual bool IsSimpleMove(Unit[,] checkersGrid, Cell targetCell)
+        {
+            Debug.WriteLine("need to be override");
+            return false;
         }
     }
 }
